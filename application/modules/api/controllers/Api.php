@@ -242,7 +242,7 @@ class Api extends REST_Controller
 			if (!empty($email) && !empty($username) && !empty($first_name) && !empty($last_name) && !empty($password)) {
 				// valid data posted (only checks for empty values)
 				// save to db
-				$sql = "INSERT INTO users (email,username,first_name,last_name,password) 
+				$sql = "INSERT INTO users (email_address,username,first_name,last_name,password) 
 				VALUES (".$this->db->escape($email).", ".$this->db->escape($username).", ".$this->db->escape($first_name).", ".$this->db->escape($last_name).", ".$this->db->escape($password).")";
 				//var_dump($sql);
 				$this->db->query($sql);
