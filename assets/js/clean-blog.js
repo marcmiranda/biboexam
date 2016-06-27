@@ -4,35 +4,39 @@
  * Licensed under Apache 2.0 (https://github.com/IronSummitMedia/startbootstrap/blob/gh-pages/LICENSE)
  */
 
-// Login Form Scripts
-$("#btnLogin").on('click', function(e){
-	e.preventDefault();
-	$("#btnLogin").addClass("btnactive");
-	$("#btnRegister").removeClass("btnactive");
-	$("#frmLogin").css("display","block");
-	$("#frmRegister").css("display","none");
-	$("#errormessage").html("");
-	$("#txtUsername").focus();
-});
-$("#btnRegister").on('click', function(e){
-	e.preventDefault();
-	$("#btnRegister").addClass("btnactive");
-	$("#btnLogin").removeClass("btnactive");
-	$("#frmRegister").css("display","block");
-	$("#frmLogin").css("display","none");
-	$("#errormessage").html("");
-	$("#txtEmail").focus();
-});
-$("#btnLoginSubmit").on('click', function(e){
-	$("frmLogin").submit();
-});
-$("#btnRegisterSubmit").on('click', function(e){
-	$("frmRegister").submit();
-});
- 
 // Contact Form Scripts
 
 $(function() {
+	
+	// MY CUSTOM SCRIPTS
+	$("#btnLogin").on('click', function(e){
+		e.preventDefault();
+		$("#btnLogin").addClass("btnactive");
+		$("#btnRegister").removeClass("btnactive");
+		$("#frmLogin").css("display","block");
+		$("#frmRegister").css("display","none");
+		$("#errormessage").html("");
+		$("#txtUsername").focus();
+	});
+	$("#btnRegister").on('click', function(e){
+		e.preventDefault();
+		$("#btnRegister").addClass("btnactive");
+		$("#btnLogin").removeClass("btnactive");
+		$("#frmRegister").css("display","block");
+		$("#frmLogin").css("display","none");
+		$("#errormessage").html("");
+		$("#txtEmail").focus();
+	});
+	$("#btnLoginSubmit").on('click', function(e){
+		$("#frmLogin").submit();
+	});
+	$("#btnRegisterSubmit").on('click', function(e){
+		$("#frmRegister").submit();
+	});
+	$("#btnAddCommentSubmit").on('click',function(e) {
+		$("#frmAddComment").submit();
+	});
+	// MY CUSTOM SCRIPTS END
 
     $("#contactFrom input,#contactForm textarea").jqBootstrapValidation({
         preventSubmit: true,
@@ -52,7 +56,7 @@ $(function() {
                 firstName = name.split(' ').slice(0, -1).join(' ');
             }
             $.ajax({
-                url: "././mail/contact_me.php",
+                url: "../assets/mail/contact_me.php",
                 type: "POST",
                 data: {
                     name: name,

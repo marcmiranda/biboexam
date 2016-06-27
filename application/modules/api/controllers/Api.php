@@ -11,6 +11,19 @@ class Api extends REST_Controller
 		$data = $this->db->query($sql);
 		$this->response($data->result());
 	}
+	
+	public function get_blog_get($blog_id = null)
+	{
+		$id = $blog_id;
+		if ($id == null) {
+			$sql = "SELECT blogs.*,users.first_name,users.last_name FROM blogs LEFT JOIN users ON blogs.user_id = users.id ORDER BY blogs.id DESC LIMIT 1";
+		} else {
+			$sql = "SELECT blogs.*,users.first_name,users.last_name FROM blogs LEFT JOIN users ON blogs.user_id = users.id WHERE blogs.id=".$id." ORDER BY blogs.id DESC";
+		}
+		
+		$data = $this->db->query($sql);
+		$this->response($data->result());
+	}
 
 	public function create_post()
 	{
@@ -245,6 +258,59 @@ class Api extends REST_Controller
 				$sql = "INSERT INTO users (email_address,username,first_name,last_name,password) 
 				VALUES (".$this->db->escape($email).", ".$this->db->escape($username).", ".$this->db->escape($first_name).", ".$this->db->escape($last_name).", ".$this->db->escape($password).")";
 				//var_dump($sql);
+				$this->db->query($sql);
+			} else {
+				// invalid data posted
+				$data['status'] = 'failed';
+				$data['error'] = 'bad_request';
+				$data['message'] = 'All required fields must be posted.';
+				$this->response($data, 400);
+			}
+			
+			// return response
+			$this->response($data, 200);
+		} 
+		
+		// return generic error response
+		$data['status'] = 'failed';
+		$data['error'] = 'internal_server_error';
+		$data['message'] = 'There was an internal server error. Please try again later.';
+		$this->response($data, 500);
+	}
+	
+	public function get_blogcomments_get($blog_id)
+	{
+		$id = $blog_id;
+		$sql = "SELECT comments.*,users.first_name,users.last_name FROM comments LEFT JOIN users ON comments.user_id = users.id WHERE comments.blog_id=".$id." ORDER BY comments.id DESC";		
+		$data = $this->db->query($sql);
+		$this->response($data->result());
+	}
+	
+	public function addcomment_post()
+	{
+		$data = array();
+		$data['status'] = 'success';
+		$data['error'] = '';
+		$data['message'] = 'Comment added.';
+		
+		if (empty($this->post())) {
+			// no posted data
+			$data['status'] = 'failed';
+			$data['error'] = 'bad_request';
+			$data['message'] = 'No data posted.';
+			$this->response($data, 400);
+		} elseif ($this->post()) {
+			// data is posted
+			// check for data validity
+			$blog_id = $this->post('blog_id');
+			$user_id = $this->post('user_id');
+			$content = $this->post('content');
+			
+			// only slug is allowed to be blank
+			if (!empty($blog_id) && !empty($user_id) && !empty($content)) {
+				// valid data posted (only checks for empty values)
+				// save to db
+				$sql = "INSERT INTO comments (blog_id,user_id,content) VALUES (".$this->db->escape($blog_id).", ".$this->db->escape($user_id).", ".$this->db->escape($content).")";
 				$this->db->query($sql);
 			} else {
 				// invalid data posted

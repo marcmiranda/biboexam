@@ -45,7 +45,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="./">Start Bootstrap</a>
+                <a class="navbar-brand" href="./">
+				<?=($this->session->userdata("data"))?"Welcome, ".$this->session->userdata("data")[0]->first_name:"Start Bootstrap"?>
+				</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -55,9 +57,12 @@
 					<li>
                         <a href="<?=base_url("blog/logout")?>">Logout</a>
                     </li>
+					<li>
+                        <a href="<?=base_url("blog/createpost")?>">Post New</a>
+                    </li>
 					<?php else: ?>
 					<li>
-                        <a href="<?=base_url("blog/login")?>">Login/Signup</a>
+                        <a href="<?=base_url("blog/login")?>">Login/Register</a>
                     </li>
 					<?php endif; ?>
 					<li>
@@ -65,9 +70,6 @@
                     </li>
                     <li>
                         <a href="<?=base_url("blog/about")?>">About</a>
-                    </li>
-                    <li>
-                        <a href="<?=base_url("blog/post")?>">Sample Post</a>
                     </li>
                     <li>
                         <a href="<?=base_url("blog/contact")?>">Contact</a>

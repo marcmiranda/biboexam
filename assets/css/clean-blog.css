@@ -412,3 +412,7 @@ body {
 	font-size: smaller;
 	color: red;
 }
+
+.addcomment:hover {
+	cursor: pointer;
+}

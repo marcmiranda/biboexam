@@ -20,20 +20,34 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <?php foreach ($blogdata as $blogdatarow): ?>
-				<div class="post-preview">
-                    <a href="post.html">
-                        <h2 class="post-title">
-                            <?=$blogdatarow->title?>
-                        </h2>
-                        <h3 class="post-subtitle">
-                            <?=$blogdatarow->content?>
-                        </h3>
-                    </a>
-                    <p class="post-meta">Posted by <a href="#"><?=$blogdatarow->first_name . " " . $blogdatarow->last_name?></a> on <?=$blogdatarow->updated_at?></p>
-                </div>
-                <hr>
-				<?php endforeach; ?>
+                <?php if (count($blogdata) > 0): ?>
+                    <?php foreach ($blogdata as $blogdatarow): ?>
+                    <div class="post-preview">
+                        <a href="<?=base_url("blog/post/")."/".$blogdatarow->id?>">
+                            <h2 class="post-title">
+                                <?=$blogdatarow->title?>
+                            </h2>
+                            <h3 class="post-subtitle">
+                                <?=$blogdatarow->content?>
+                            </h3>
+                        </a>
+                        <p class="post-meta">Posted by <a href="#"><?=$blogdatarow->first_name . " " . $blogdatarow->last_name?></a> on <?=$blogdatarow->updated_at?></p>
+                    </div>
+                    <hr>
+                    <?php endforeach; ?>
+					<hr>
+					<!-- Pager -->
+					<ul class="pager">
+						<li class="next">
+							<a href="#">Older Posts &rarr;</a>
+						</li>
+					</ul>
+                <?php else: ?>
+                    <div class="post-preview">
+                        <h1>Sorry, no posts yet :(</h1><br />
+						<h5 class="text-center"><a href="<?=base_url("blog/createpost")?>">Why don't you create a new post?</a></h5>
+                    </div>
+                <?php endif; ?>
 				<!-- 
 				<div class="post-preview">
                     <a href="post.html">
@@ -80,13 +94,7 @@
                     <p class="post-meta">Posted by <a href="#">Start Bootstrap</a> on July 8, 2014</p>
                 </div>
 				-->
-                <hr>
-                <!-- Pager -->
-                <ul class="pager">
-                    <li class="next">
-                        <a href="#">Older Posts &rarr;</a>
-                    </li>
-                </ul>
+                
             </div>
         </div>
     </div>
